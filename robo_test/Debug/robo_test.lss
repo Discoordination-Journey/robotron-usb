@@ -1,0 +1,432 @@
+
+robo_test.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         0000024a  00000000  00000000  00000094  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  0000024a  000002de  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000003  00800060  00800060  000002de  2**0
+                  ALLOC
+  3 .stab         000006cc  00000000  00000000  000002e0  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  4 .stabstr      00000085  00000000  00000000  000009ac  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_aranges 00000080  00000000  00000000  00000a38  2**3
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   0000050f  00000000  00000000  00000ab8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 000001ad  00000000  00000000  00000fc7  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   00000384  00000000  00000000  00001174  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  000000c8  00000000  00000000  000014f8  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    0000012c  00000000  00000000  000015c0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    0000016a  00000000  00000000  000016ec  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	12 c0       	rjmp	.+36     	; 0x26 <__ctors_end>
+   2:	77 c0       	rjmp	.+238    	; 0xf2 <__vector_1>
+   4:	2b c0       	rjmp	.+86     	; 0x5c <__bad_interrupt>
+   6:	2a c0       	rjmp	.+84     	; 0x5c <__bad_interrupt>
+   8:	29 c0       	rjmp	.+82     	; 0x5c <__bad_interrupt>
+   a:	28 c0       	rjmp	.+80     	; 0x5c <__bad_interrupt>
+   c:	27 c0       	rjmp	.+78     	; 0x5c <__bad_interrupt>
+   e:	26 c0       	rjmp	.+76     	; 0x5c <__bad_interrupt>
+  10:	25 c0       	rjmp	.+74     	; 0x5c <__bad_interrupt>
+  12:	24 c0       	rjmp	.+72     	; 0x5c <__bad_interrupt>
+  14:	23 c0       	rjmp	.+70     	; 0x5c <__bad_interrupt>
+  16:	22 c0       	rjmp	.+68     	; 0x5c <__bad_interrupt>
+  18:	21 c0       	rjmp	.+66     	; 0x5c <__bad_interrupt>
+  1a:	20 c0       	rjmp	.+64     	; 0x5c <__bad_interrupt>
+  1c:	1f c0       	rjmp	.+62     	; 0x5c <__bad_interrupt>
+  1e:	1e c0       	rjmp	.+60     	; 0x5c <__bad_interrupt>
+  20:	1d c0       	rjmp	.+58     	; 0x5c <__bad_interrupt>
+  22:	1c c0       	rjmp	.+56     	; 0x5c <__bad_interrupt>
+  24:	1b c0       	rjmp	.+54     	; 0x5c <__bad_interrupt>
+
+00000026 <__ctors_end>:
+  26:	11 24       	eor	r1, r1
+  28:	1f be       	out	0x3f, r1	; 63
+  2a:	cf e5       	ldi	r28, 0x5F	; 95
+  2c:	d4 e0       	ldi	r29, 0x04	; 4
+  2e:	de bf       	out	0x3e, r29	; 62
+  30:	cd bf       	out	0x3d, r28	; 61
+
+00000032 <__do_copy_data>:
+  32:	10 e0       	ldi	r17, 0x00	; 0
+  34:	a0 e6       	ldi	r26, 0x60	; 96
+  36:	b0 e0       	ldi	r27, 0x00	; 0
+  38:	ea e4       	ldi	r30, 0x4A	; 74
+  3a:	f2 e0       	ldi	r31, 0x02	; 2
+  3c:	02 c0       	rjmp	.+4      	; 0x42 <__SREG__+0x3>
+  3e:	05 90       	lpm	r0, Z+
+  40:	0d 92       	st	X+, r0
+  42:	a0 36       	cpi	r26, 0x60	; 96
+  44:	b1 07       	cpc	r27, r17
+  46:	d9 f7       	brne	.-10     	; 0x3e <__SP_H__>
+
+00000048 <__do_clear_bss>:
+  48:	10 e0       	ldi	r17, 0x00	; 0
+  4a:	a0 e6       	ldi	r26, 0x60	; 96
+  4c:	b0 e0       	ldi	r27, 0x00	; 0
+  4e:	01 c0       	rjmp	.+2      	; 0x52 <.do_clear_bss_start>
+
+00000050 <.do_clear_bss_loop>:
+  50:	1d 92       	st	X+, r1
+
+00000052 <.do_clear_bss_start>:
+  52:	a3 36       	cpi	r26, 0x63	; 99
+  54:	b1 07       	cpc	r27, r17
+  56:	e1 f7       	brne	.-8      	; 0x50 <.do_clear_bss_loop>
+  58:	f3 d0       	rcall	.+486    	; 0x240 <main>
+  5a:	f5 c0       	rjmp	.+490    	; 0x246 <_exit>
+
+0000005c <__bad_interrupt>:
+  5c:	d1 cf       	rjmp	.-94     	; 0x0 <__vectors>
+
+0000005e <UART>:
+uint8_t robotron_data = 0;
+uint8_t modificator = 0;
+
+void UART(unsigned int ubrr)
+{
+	UBRRH |= (unsigned char)(ubrr>>8);
+  5e:	20 b5       	in	r18, 0x20	; 32
+  60:	92 2b       	or	r25, r18
+  62:	90 bd       	out	0x20, r25	; 32
+	UBRRL |= (unsigned char)ubrr;
+  64:	99 b1       	in	r25, 0x09	; 9
+  66:	89 2b       	or	r24, r25
+  68:	89 b9       	out	0x09, r24	; 9
+	UCSRB |= (1<<RXEN)|(1<<TXEN)|(1<<RXCIE);
+  6a:	8a b1       	in	r24, 0x0a	; 10
+  6c:	88 69       	ori	r24, 0x98	; 152
+  6e:	8a b9       	out	0x0a, r24	; 10
+	UCSRC |= (1<<URSEL)|(3<<UCSZ0);
+  70:	80 b5       	in	r24, 0x20	; 32
+  72:	86 68       	ori	r24, 0x86	; 134
+  74:	80 bd       	out	0x20, r24	; 32
+}
+  76:	08 95       	ret
+
+00000078 <UART_Transmit>:
+
+void UART_Transmit(unsigned char data)
+{
+	while(!(UCSRA & (1<<UDRE)));
+  78:	5d 9b       	sbis	0x0b, 5	; 11
+  7a:	fe cf       	rjmp	.-4      	; 0x78 <UART_Transmit>
+	UDR = data;
+  7c:	8c b9       	out	0x0c, r24	; 12
+}
+  7e:	08 95       	ret
+
+00000080 <bufferWrite>:
+
+void bufferWrite(void)
+{
+  80:	cf 93       	push	r28
+  82:	df 93       	push	r29
+  84:	c3 e0       	ldi	r28, 0x03	; 3
+  86:	d0 e0       	ldi	r29, 0x00	; 0
+	for(int8_t i = 3; i >= 0; i--)
+	{
+		if(modificator & (1<<i)) UART_Transmit(0x31);
+  88:	80 91 60 00 	lds	r24, 0x0060
+  8c:	90 e0       	ldi	r25, 0x00	; 0
+  8e:	0c 2e       	mov	r0, r28
+  90:	02 c0       	rjmp	.+4      	; 0x96 <bufferWrite+0x16>
+  92:	95 95       	asr	r25
+  94:	87 95       	ror	r24
+  96:	0a 94       	dec	r0
+  98:	e2 f7       	brpl	.-8      	; 0x92 <bufferWrite+0x12>
+  9a:	80 ff       	sbrs	r24, 0
+  9c:	03 c0       	rjmp	.+6      	; 0xa4 <bufferWrite+0x24>
+  9e:	81 e3       	ldi	r24, 0x31	; 49
+  a0:	eb df       	rcall	.-42     	; 0x78 <UART_Transmit>
+  a2:	02 c0       	rjmp	.+4      	; 0xa8 <bufferWrite+0x28>
+		else UART_Transmit(0x30);
+  a4:	80 e3       	ldi	r24, 0x30	; 48
+  a6:	e8 df       	rcall	.-48     	; 0x78 <UART_Transmit>
+  a8:	21 97       	sbiw	r28, 0x01	; 1
+	UDR = data;
+}
+
+void bufferWrite(void)
+{
+	for(int8_t i = 3; i >= 0; i--)
+  aa:	8f ef       	ldi	r24, 0xFF	; 255
+  ac:	cf 3f       	cpi	r28, 0xFF	; 255
+  ae:	d8 07       	cpc	r29, r24
+  b0:	59 f7       	brne	.-42     	; 0x88 <bufferWrite+0x8>
+	{
+		if(modificator & (1<<i)) UART_Transmit(0x31);
+		else UART_Transmit(0x30);
+	}
+	
+	UART_Transmit(0x20); // space
+  b2:	80 e2       	ldi	r24, 0x20	; 32
+  b4:	e1 df       	rcall	.-62     	; 0x78 <UART_Transmit>
+	
+	for(int i = 7; i >= 0; i--)
+  b6:	c7 e0       	ldi	r28, 0x07	; 7
+  b8:	d0 e0       	ldi	r29, 0x00	; 0
+	{
+		if(robotron_data & (1<<i)) UART_Transmit(0x31);
+  ba:	80 91 61 00 	lds	r24, 0x0061
+  be:	90 e0       	ldi	r25, 0x00	; 0
+  c0:	0c 2e       	mov	r0, r28
+  c2:	02 c0       	rjmp	.+4      	; 0xc8 <bufferWrite+0x48>
+  c4:	95 95       	asr	r25
+  c6:	87 95       	ror	r24
+  c8:	0a 94       	dec	r0
+  ca:	e2 f7       	brpl	.-8      	; 0xc4 <bufferWrite+0x44>
+  cc:	80 ff       	sbrs	r24, 0
+  ce:	03 c0       	rjmp	.+6      	; 0xd6 <bufferWrite+0x56>
+  d0:	81 e3       	ldi	r24, 0x31	; 49
+  d2:	d2 df       	rcall	.-92     	; 0x78 <UART_Transmit>
+  d4:	02 c0       	rjmp	.+4      	; 0xda <bufferWrite+0x5a>
+		else UART_Transmit(0x30);
+  d6:	80 e3       	ldi	r24, 0x30	; 48
+  d8:	cf df       	rcall	.-98     	; 0x78 <UART_Transmit>
+		else UART_Transmit(0x30);
+	}
+	
+	UART_Transmit(0x20); // space
+	
+	for(int i = 7; i >= 0; i--)
+  da:	21 97       	sbiw	r28, 0x01	; 1
+  dc:	8f ef       	ldi	r24, 0xFF	; 255
+  de:	cf 3f       	cpi	r28, 0xFF	; 255
+  e0:	d8 07       	cpc	r29, r24
+  e2:	59 f7       	brne	.-42     	; 0xba <bufferWrite+0x3a>
+	{
+		if(robotron_data & (1<<i)) UART_Transmit(0x31);
+		else UART_Transmit(0x30);
+	}
+	
+	UART_Transmit(0xD); // CR
+  e4:	8d e0       	ldi	r24, 0x0D	; 13
+  e6:	c8 df       	rcall	.-112    	; 0x78 <UART_Transmit>
+	UART_Transmit(0xA); // NL
+  e8:	8a e0       	ldi	r24, 0x0A	; 10
+  ea:	c6 df       	rcall	.-116    	; 0x78 <UART_Transmit>
+}
+  ec:	df 91       	pop	r29
+  ee:	cf 91       	pop	r28
+  f0:	08 95       	ret
+
+000000f2 <__vector_1>:
+
+ISR(INT0_vect) // key is pressed
+{
+  f2:	1f 92       	push	r1
+  f4:	0f 92       	push	r0
+  f6:	0f b6       	in	r0, 0x3f	; 63
+  f8:	0f 92       	push	r0
+  fa:	11 24       	eor	r1, r1
+  fc:	2f 93       	push	r18
+  fe:	3f 93       	push	r19
+ 100:	4f 93       	push	r20
+ 102:	5f 93       	push	r21
+ 104:	6f 93       	push	r22
+ 106:	7f 93       	push	r23
+ 108:	8f 93       	push	r24
+ 10a:	9f 93       	push	r25
+ 10c:	af 93       	push	r26
+ 10e:	bf 93       	push	r27
+ 110:	ef 93       	push	r30
+ 112:	ff 93       	push	r31
+	if(data_pointer > 2 && data_pointer < 7)
+ 114:	80 91 62 00 	lds	r24, 0x0062
+ 118:	83 30       	cpi	r24, 0x03	; 3
+ 11a:	58 f1       	brcs	.+86     	; 0x172 <__vector_1+0x80>
+ 11c:	80 91 62 00 	lds	r24, 0x0062
+ 120:	87 30       	cpi	r24, 0x07	; 7
+ 122:	38 f5       	brcc	.+78     	; 0x172 <__vector_1+0x80>
+	{
+		// modificator
+		if(ROBO_PIN & (1 << ROBO)) modificator |= (1 << (data_pointer-3));
+ 124:	83 9b       	sbis	0x10, 3	; 16
+ 126:	12 c0       	rjmp	.+36     	; 0x14c <__vector_1+0x5a>
+ 128:	20 91 62 00 	lds	r18, 0x0062
+ 12c:	30 e0       	ldi	r19, 0x00	; 0
+ 12e:	23 50       	subi	r18, 0x03	; 3
+ 130:	30 40       	sbci	r19, 0x00	; 0
+ 132:	81 e0       	ldi	r24, 0x01	; 1
+ 134:	90 e0       	ldi	r25, 0x00	; 0
+ 136:	02 c0       	rjmp	.+4      	; 0x13c <__vector_1+0x4a>
+ 138:	88 0f       	add	r24, r24
+ 13a:	99 1f       	adc	r25, r25
+ 13c:	2a 95       	dec	r18
+ 13e:	e2 f7       	brpl	.-8      	; 0x138 <__vector_1+0x46>
+ 140:	90 91 60 00 	lds	r25, 0x0060
+ 144:	89 2b       	or	r24, r25
+ 146:	80 93 60 00 	sts	0x0060, r24
+ 14a:	41 c0       	rjmp	.+130    	; 0x1ce <__vector_1+0xdc>
+		else  modificator &= ~(1 << (data_pointer-3));
+ 14c:	20 91 62 00 	lds	r18, 0x0062
+ 150:	30 e0       	ldi	r19, 0x00	; 0
+ 152:	23 50       	subi	r18, 0x03	; 3
+ 154:	30 40       	sbci	r19, 0x00	; 0
+ 156:	81 e0       	ldi	r24, 0x01	; 1
+ 158:	90 e0       	ldi	r25, 0x00	; 0
+ 15a:	02 c0       	rjmp	.+4      	; 0x160 <__vector_1+0x6e>
+ 15c:	88 0f       	add	r24, r24
+ 15e:	99 1f       	adc	r25, r25
+ 160:	2a 95       	dec	r18
+ 162:	e2 f7       	brpl	.-8      	; 0x15c <__vector_1+0x6a>
+ 164:	80 95       	com	r24
+ 166:	90 91 60 00 	lds	r25, 0x0060
+ 16a:	89 23       	and	r24, r25
+ 16c:	80 93 60 00 	sts	0x0060, r24
+ 170:	2e c0       	rjmp	.+92     	; 0x1ce <__vector_1+0xdc>
+	}
+	else if(data_pointer > 15 && data_pointer < 25)
+ 172:	80 91 62 00 	lds	r24, 0x0062
+ 176:	80 31       	cpi	r24, 0x10	; 16
+ 178:	50 f1       	brcs	.+84     	; 0x1ce <__vector_1+0xdc>
+ 17a:	80 91 62 00 	lds	r24, 0x0062
+ 17e:	89 31       	cpi	r24, 0x19	; 25
+ 180:	30 f5       	brcc	.+76     	; 0x1ce <__vector_1+0xdc>
+	{
+		// data
+		if(ROBO_PIN & (1 << ROBO)) robotron_data |= (1 << (data_pointer-16));
+ 182:	83 9b       	sbis	0x10, 3	; 16
+ 184:	12 c0       	rjmp	.+36     	; 0x1aa <__vector_1+0xb8>
+ 186:	20 91 62 00 	lds	r18, 0x0062
+ 18a:	30 e0       	ldi	r19, 0x00	; 0
+ 18c:	20 51       	subi	r18, 0x10	; 16
+ 18e:	30 40       	sbci	r19, 0x00	; 0
+ 190:	81 e0       	ldi	r24, 0x01	; 1
+ 192:	90 e0       	ldi	r25, 0x00	; 0
+ 194:	02 c0       	rjmp	.+4      	; 0x19a <__vector_1+0xa8>
+ 196:	88 0f       	add	r24, r24
+ 198:	99 1f       	adc	r25, r25
+ 19a:	2a 95       	dec	r18
+ 19c:	e2 f7       	brpl	.-8      	; 0x196 <__vector_1+0xa4>
+ 19e:	90 91 61 00 	lds	r25, 0x0061
+ 1a2:	89 2b       	or	r24, r25
+ 1a4:	80 93 61 00 	sts	0x0061, r24
+ 1a8:	12 c0       	rjmp	.+36     	; 0x1ce <__vector_1+0xdc>
+		else robotron_data &= ~(1 << (data_pointer-16));
+ 1aa:	20 91 62 00 	lds	r18, 0x0062
+ 1ae:	30 e0       	ldi	r19, 0x00	; 0
+ 1b0:	20 51       	subi	r18, 0x10	; 16
+ 1b2:	30 40       	sbci	r19, 0x00	; 0
+ 1b4:	81 e0       	ldi	r24, 0x01	; 1
+ 1b6:	90 e0       	ldi	r25, 0x00	; 0
+ 1b8:	02 c0       	rjmp	.+4      	; 0x1be <__vector_1+0xcc>
+ 1ba:	88 0f       	add	r24, r24
+ 1bc:	99 1f       	adc	r25, r25
+ 1be:	2a 95       	dec	r18
+ 1c0:	e2 f7       	brpl	.-8      	; 0x1ba <__vector_1+0xc8>
+ 1c2:	80 95       	com	r24
+ 1c4:	90 91 61 00 	lds	r25, 0x0061
+ 1c8:	89 23       	and	r24, r25
+ 1ca:	80 93 61 00 	sts	0x0061, r24
+	}
+	
+	if(data_pointer == 25) // end of data
+ 1ce:	80 91 62 00 	lds	r24, 0x0062
+ 1d2:	89 31       	cpi	r24, 0x19	; 25
+ 1d4:	21 f4       	brne	.+8      	; 0x1de <__vector_1+0xec>
+	{
+		data_pointer = 0;
+ 1d6:	10 92 62 00 	sts	0x0062, r1
+		bufferWrite();
+ 1da:	52 df       	rcall	.-348    	; 0x80 <bufferWrite>
+ 1dc:	05 c0       	rjmp	.+10     	; 0x1e8 <__vector_1+0xf6>
+	}
+	else data_pointer++;
+ 1de:	80 91 62 00 	lds	r24, 0x0062
+ 1e2:	8f 5f       	subi	r24, 0xFF	; 255
+ 1e4:	80 93 62 00 	sts	0x0062, r24
+}
+ 1e8:	ff 91       	pop	r31
+ 1ea:	ef 91       	pop	r30
+ 1ec:	bf 91       	pop	r27
+ 1ee:	af 91       	pop	r26
+ 1f0:	9f 91       	pop	r25
+ 1f2:	8f 91       	pop	r24
+ 1f4:	7f 91       	pop	r23
+ 1f6:	6f 91       	pop	r22
+ 1f8:	5f 91       	pop	r21
+ 1fa:	4f 91       	pop	r20
+ 1fc:	3f 91       	pop	r19
+ 1fe:	2f 91       	pop	r18
+ 200:	0f 90       	pop	r0
+ 202:	0f be       	out	0x3f, r0	; 63
+ 204:	0f 90       	pop	r0
+ 206:	1f 90       	pop	r1
+ 208:	18 95       	reti
+
+0000020a <setup>:
+
+void setup(void)
+{
+	MCUCR |= (1<<ISC00)|(1<<ISC01)|(1<<INT0); // int0
+ 20a:	85 b7       	in	r24, 0x35	; 53
+ 20c:	83 64       	ori	r24, 0x43	; 67
+ 20e:	85 bf       	out	0x35, r24	; 53
+	GICR |= (1<<INT0);
+ 210:	8b b7       	in	r24, 0x3b	; 59
+ 212:	80 64       	ori	r24, 0x40	; 64
+ 214:	8b bf       	out	0x3b, r24	; 59
+	UART(F_CPU/16/BAUD-1);
+ 216:	87 e6       	ldi	r24, 0x67	; 103
+ 218:	90 e0       	ldi	r25, 0x00	; 0
+ 21a:	21 df       	rcall	.-446    	; 0x5e <UART>
+	
+	PORTB |= (1<<PB1);
+ 21c:	c1 9a       	sbi	0x18, 1	; 24
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 21e:	8f ef       	ldi	r24, 0xFF	; 255
+ 220:	93 ed       	ldi	r25, 0xD3	; 211
+ 222:	a0 e3       	ldi	r26, 0x30	; 48
+ 224:	81 50       	subi	r24, 0x01	; 1
+ 226:	90 40       	sbci	r25, 0x00	; 0
+ 228:	a0 40       	sbci	r26, 0x00	; 0
+ 22a:	e1 f7       	brne	.-8      	; 0x224 <setup+0x1a>
+ 22c:	00 c0       	rjmp	.+0      	; 0x22e <setup+0x24>
+ 22e:	00 00       	nop
+	_delay_ms(1000);
+	PORTB &= ~(1<<PB1);
+ 230:	c1 98       	cbi	0x18, 1	; 24
+	
+	for(uint8_t i = 0; i < sizeof(robotron_data); i++) robotron_data &= ~(1UL<<i);
+ 232:	80 91 61 00 	lds	r24, 0x0061
+ 236:	8e 7f       	andi	r24, 0xFE	; 254
+ 238:	80 93 61 00 	sts	0x0061, r24
+	sei();
+ 23c:	78 94       	sei
+}
+ 23e:	08 95       	ret
+
+00000240 <main>:
+
+int main(void)
+{
+	setup();
+ 240:	e4 df       	rcall	.-56     	; 0x20a <setup>
+	bufferWrite();
+ 242:	1e df       	rcall	.-452    	; 0x80 <bufferWrite>
+ 244:	ff cf       	rjmp	.-2      	; 0x244 <main+0x4>
+
+00000246 <_exit>:
+ 246:	f8 94       	cli
+
+00000248 <__stop_program>:
+ 248:	ff cf       	rjmp	.-2      	; 0x248 <__stop_program>
